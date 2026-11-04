@@ -468,70 +468,87 @@ namespace WinAppTicTacToe
         /// </summary>
         /// <param name="listButtons">The list of UI buttons representing the game board.</param>
         /// <param name="grbTicTacToe">The GroupBox containing the Tic-Tac-Toe board.</param>
-        public void PlayNPC(List<Button> ListButtons, GroupBox grbTicTacToe)
+        private int GetMinimaxScore(Player player, int depth)
         {
-            int index;
-            Random RandomNumber = new Random();
-
-            if (mCurrentGameState == GameState.Active)
+            foreach (var line in WinningLines)
             {
-                if (MoveNumber == 1)
+                if (mBoardState[line[0]] != Player.None &&
+                    mBoardState[line[0]] == mBoardState[line[1]] &&
+                    mBoardState[line[1]] == mBoardState[line[2]])
                 {
-                    if (mArrayMoves[4] == 0)
-                    {
-                        index = CENTER_INDEX;
-                        ShowNPCMove(ListButtons, index);
-                        mCurrentGameState = CheckWinner(ListButtons, grbTicTacToe);
-                        return;
-                    }
-                    do
-                    {
-                        index = RandomNumber.Next(0, 9);
-                        if (mArrayMoves[index] == 0 && 
-                           (index == CORNER_INDICES[0] || index == CORNER_INDICES[1] || 
-                            index == CORNER_INDICES[2] || index == CORNER_INDICES[3]))
-                        {
-                            ShowNPCMove(ListButtons, index);
-                            mCurrentGameState = CheckWinner(ListButtons, grbTicTacToe);
-                            return;
-                        }
-                    } while (true);
-                }
-                else // (MoveNumber != 1)
-                {
-                    if (mArrayMoves[4] == 0)
-                    {
-                        index = CENTER_INDEX;
-                        ShowNPCMove(ListButtons, index);
-                        mCurrentGameState = CheckWinner(ListButtons, grbTicTacToe);
-                        return;
-                    }
-                    else
-                    {
-                        index = HeuristicNumericalMethod(ListButtons);
-                        if (mArrayMoves[4] == 3 && mHeuristicSum == 5)
-                        {
-                            do
-                            {
-                                index = RandomNumber.Next(0, 9);
-                                if (mArrayMoves[index] == 0 && 
-                                   (index == SIDE_INDICES[0] || index == SIDE_INDICES[0] || 
-                                    index == SIDE_INDICES[2] || index == SIDE_INDICES[3]))
-                                {
-                                    ShowNPCMove(ListButtons, index);
-                                    mCurrentGameState = CheckWinner(ListButtons, grbTicTacToe);
-                                    return;
-                                }
-                            } while (true);
-                        }
-                        ShowNPCMove(ListButtons, index);
-                        mCurrentGameState = CheckWinner(ListButtons, grbTicTacToe);
-                        return;
-                    }
+                    return mBoardState[line[0]] == Player.NPC ? 10 - depth : depth - 10;
                 }
             }
-            else
+
+            bool boardIsFull = true;
+            for (int i = 0; i < mBoardState.Length; i++)
+            {
+                if (mBoardState[i] == Player.None)
+                {
+                    boardIsFull = false;
+                    break;
+                }
+            }
+
+            if (boardIsFull)
+                return 0;
+
+            bool maximizing = player == Player.NPC;
+            int bestScore = maximizing ? int.MinValue : int.MaxValue;
+            for (int i = 0; i < mBoardState.Length; i++)
+            {
+                if (mBoardState[i] != Player.None)
+                    continue;
+
+                mBoardState[i] = player;
+                int score = GetMinimaxScore(maximizing ? Player.User : Player.NPC, depth + 1);
+                mBoardState[i] = Player.None;
+
+                if (maximizing)
+                    bestScore = Math.Max(bestScore, score);
+                else
+                    bestScore = Math.Min(bestScore, score);
+            }
+
+            return bestScore;
+        }
+
+        private int FindBestNPCMove()
+        {
+            int bestMove = -1;
+            int bestScore = int.MinValue;
+            int[] moveOrder = { CENTER_INDEX, CORNER_INDICES[0], CORNER_INDICES[1], CORNER_INDICES[2], CORNER_INDICES[3], SIDE_INDICES[0], SIDE_INDICES[1], SIDE_INDICES[2], SIDE_INDICES[3] };
+
+            foreach (int move in moveOrder)
+            {
+                if (mBoardState[move] != Player.None)
+                    continue;
+
+                mBoardState[move] = Player.NPC;
+                int score = GetMinimaxScore(Player.User, 1);
+                mBoardState[move] = Player.None;
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestMove = move;
+                }
+            }
+
+            return bestMove;
+        }
+
+        public void PlayNPC(List<Button> ListButtons, GroupBox grbTicTacToe)
+        {
+            if (mCurrentGameState != GameState.Active)
                 return;
+
+            int index = FindBestNPCMove();
+            if (index >= 0)
+            {
+                ShowNPCMove(ListButtons, index);
+                mCurrentGameState = CheckWinner(ListButtons, grbTicTacToe);
+            }
         }
 
         #endregion
