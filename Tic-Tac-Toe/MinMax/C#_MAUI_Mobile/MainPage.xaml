@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TicTacToeMinMax.MainPage" Title="Tic-Tac-Toe"
+             Shell.NavBarIsVisible="False" BackgroundColor="#F3F6FC">
+    <ContentPage.Resources>
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="#52627C" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="CornerRadius" Value="12" />
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="24,60,24,28" Spacing="22" MaximumWidthRequest="440" HorizontalOptions="Center">
+            <Grid ColumnDefinitions="*,64" ColumnSpacing="12">
+                <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                    <Label Text="Tic-Tac-Toe" FontSize="32" FontAttributes="Bold" TextColor="#182C50" />
+                    <Label Text="Horas de diversión" FontSize="15" TextColor="#65738D" />
+                </VerticalStackLayout>
+                <Border Grid.Column="1" StrokeThickness="0" BackgroundColor="#DCEFFA" StrokeShape="RoundRectangle 24" Padding="0">
+                    <Image Source="pic_character.png" WidthRequest="64" HeightRequest="64" Aspect="AspectFill" SemanticProperties.Description="Personaje de Tic-Tac-Toe" />
+                </Border>
+            </Grid>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Border StrokeThickness="0" BackgroundColor="#E5EBFF" StrokeShape="RoundRectangle 18" Padding="16,12">
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="X" FontSize="30" FontAttributes="Bold" TextColor="#345DEE" VerticalOptions="Center" />
+                        <VerticalStackLayout Spacing="1" VerticalOptions="Center">
+                            <Label Text="Tú" FontSize="16" FontAttributes="Bold" TextColor="#182C50" />
+                            <Label Text="Comienzas" FontSize="12" TextColor="#65738D" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Border>
+                <Border Grid.Column="1" StrokeThickness="0" BackgroundColor="#FFF0E6" StrokeShape="RoundRectangle 18" Padding="16,12">
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="O" FontSize="30" FontAttributes="Bold" TextColor="#BC571F" VerticalOptions="Center" />
+                        <VerticalStackLayout Spacing="1" VerticalOptions="Center">
+                            <Label Text="Minimax" FontSize="16" FontAttributes="Bold" TextColor="#182C50" />
+                            <Label Text="Tu rival" FontSize="12" TextColor="#80674F" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+            <Border StrokeThickness="0" BackgroundColor="#DCE4F4" StrokeShape="RoundRectangle 26" Padding="10" HorizontalOptions="Center">
+                <Grid x:Name="BoardGrid" WidthRequest="260" HeightRequest="260"
+                      RowDefinitions="*,*,*" ColumnDefinitions="*,*,*" RowSpacing="8" ColumnSpacing="8" />
+            </Border>
+            <Label Text="Elige una casilla y comienza a jugar." FontSize="13" TextColor="#65738D" HorizontalTextAlignment="Center" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <Button x:Name="btnNew" Text="Nuevo" FontSize="16" FontAttributes="Bold" HeightRequest="54"
+                        BackgroundColor="#345DEE" TextColor="White" CornerRadius="18" Clicked="OnNewClicked" />
+                <Button x:Name="btnExit" Grid.Column="1" Text="Salir" FontSize="16" HeightRequest="54" Padding="24,0"
+                        BackgroundColor="#E5EAF3" TextColor="#182C50" CornerRadius="18" Clicked="OnExitClicked" />
+            </Grid>
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                <Button Text="Archivo" Style="{StaticResource MenuButton}" Clicked="OnArchivoClicked" />
+                <Button Grid.Column="1" Text="Ver" Style="{StaticResource MenuButton}" Clicked="OnVerClicked" />
+                <Button Grid.Column="2" Text="Ayuda" Style="{StaticResource MenuButton}" Clicked="OnAyudaClicked" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+

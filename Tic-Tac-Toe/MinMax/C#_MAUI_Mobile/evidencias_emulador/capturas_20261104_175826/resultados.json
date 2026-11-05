@@ -1,0 +1,201 @@
+{
+  "pruebas": [
+    {
+      "prueba": "Nuevo limpia tablero",
+      "resultado": "PASS",
+      "detalle": "Nueve casillas vacías y nuevo turno humano."
+    },
+    {
+      "prueba": "Turno humano e IA",
+      "resultado": "PASS",
+      "detalle": "X en casilla 1; Minimax responde O en el centro."
+    },
+    {
+      "prueba": "Casilla ocupada",
+      "resultado": "PASS",
+      "detalle": "Pulsar X existente no modifica el tablero."
+    },
+    {
+      "prueba": "Menú Archivo",
+      "resultado": "PASS",
+      "detalle": "Opciones originales visibles: Nuevo, Salir"
+    },
+    {
+      "prueba": "Cancelar Archivo",
+      "resultado": "PASS",
+      "detalle": "Cancelar conserva la partida."
+    },
+    {
+      "prueba": "Opción Archivo/Nuevo",
+      "resultado": "PASS",
+      "detalle": "Sin cambio de partida: el menú original carece de manejadores; Nuevo y Salir funcionan mediante los botones inferiores."
+    },
+    {
+      "prueba": "Opción Archivo/Salir",
+      "resultado": "PASS",
+      "detalle": "Sin cambio de partida: el menú original carece de manejadores; Nuevo y Salir funcionan mediante los botones inferiores."
+    },
+    {
+      "prueba": "Menú Ver",
+      "resultado": "PASS",
+      "detalle": "Opciones originales visibles: Puntajes, Resetear puntajes"
+    },
+    {
+      "prueba": "Cancelar Ver",
+      "resultado": "PASS",
+      "detalle": "Cancelar conserva la partida."
+    },
+    {
+      "prueba": "Opción Ver/Puntajes",
+      "resultado": "PASS",
+      "detalle": "Sin cambio de partida: el menú original carece de manejadores; Nuevo y Salir funcionan mediante los botones inferiores."
+    },
+    {
+      "prueba": "Opción Ver/Resetear puntajes",
+      "resultado": "PASS",
+      "detalle": "Sin cambio de partida: el menú original carece de manejadores; Nuevo y Salir funcionan mediante los botones inferiores."
+    },
+    {
+      "prueba": "Menú Ayuda",
+      "resultado": "PASS",
+      "detalle": "Opciones originales visibles: Acerca de..., Contenido"
+    },
+    {
+      "prueba": "Cancelar Ayuda",
+      "resultado": "PASS",
+      "detalle": "Cancelar conserva la partida."
+    },
+    {
+      "prueba": "Opción Ayuda/Acerca de...",
+      "resultado": "PASS",
+      "detalle": "Sin cambio de partida: el menú original carece de manejadores; Nuevo y Salir funcionan mediante los botones inferiores."
+    },
+    {
+      "prueba": "Opción Ayuda/Contenido",
+      "resultado": "PASS",
+      "detalle": "Sin cambio de partida: el menú original carece de manejadores; Nuevo y Salir funcionan mediante los botones inferiores."
+    },
+    {
+      "prueba": "Nuevo limpia tablero",
+      "resultado": "PASS",
+      "detalle": "Nueve casillas vacías y nuevo turno humano."
+    },
+    {
+      "prueba": "IA bloquea amenaza",
+      "resultado": "PASS",
+      "detalle": "O en casilla 7 bloquea la columna de X."
+    },
+    {
+      "prueba": "Victoria IA",
+      "resultado": "PASS",
+      "detalle": "Se muestra el aviso original AI Wins!."
+    },
+    {
+      "prueba": "Fin de partida bloquea jugadas",
+      "resultado": "PASS",
+      "detalle": "Una casilla libre no acepta otra X después de la victoria."
+    },
+    {
+      "prueba": "Nuevo limpia tablero",
+      "resultado": "PASS",
+      "detalle": "Nueve casillas vacías y nuevo turno humano."
+    },
+    {
+      "prueba": "Empate",
+      "resultado": "PASS",
+      "detalle": "Se muestra el aviso original de empate."
+    },
+    {
+      "prueba": "Tablero de empate",
+      "resultado": "PASS",
+      "detalle": "Nueve casillas ocupadas sin línea ganadora."
+    },
+    {
+      "prueba": "Nuevo limpia tablero",
+      "resultado": "PASS",
+      "detalle": "Nueve casillas vacías y nuevo turno humano."
+    },
+    {
+      "prueba": "Salir",
+      "resultado": "PASS",
+      "detalle": "El botón Salir cierra el proceso Android."
+    },
+    {
+      "prueba": "Reapertura",
+      "resultado": "PASS",
+      "detalle": "La aplicación vuelve a abrir con tablero vacío."
+    }
+  ],
+  "capturas": [
+    {
+      "archivo": "01_inicio.png",
+      "descripcion": "Pantalla inicial: menús, personaje original, tablero vacío y botones Nuevo y Salir.",
+      "sha256": "a0e6f71e7712ad2b0677e1bfc7fac16e0fdfb30373a7fad9198ad3db143f177b"
+    },
+    {
+      "archivo": "02_turno_humano_ia.png",
+      "descripcion": "Jugada humana X y respuesta automática O de Minimax.",
+      "sha256": "0c3a38c4fe5fb1798122b5c21c75b74703e18653eea6419bd15103639ec71c13"
+    },
+    {
+      "archivo": "03_casilla_ocupada.png",
+      "descripcion": "El tablero se conserva tras pulsar una casilla ocupada.",
+      "sha256": "0c3a38c4fe5fb1798122b5c21c75b74703e18653eea6419bd15103639ec71c13"
+    },
+    {
+      "archivo": "04_menu_archivo.png",
+      "descripcion": "Menú Archivo con las opciones del proyecto WinForms original.",
+      "sha256": "ed12e49ad6ad7be1fe0892a38bb1bf6031a86b98fa1b0b5a60d2b0667111fe32"
+    },
+    {
+      "archivo": "05_menu_ver.png",
+      "descripcion": "Menú Ver con las opciones del proyecto WinForms original.",
+      "sha256": "aeb653b498db942bbd0332d32974509e2c839c5e3f7eb1fcddf88f570a3ddbd6"
+    },
+    {
+      "archivo": "06_menu_ayuda.png",
+      "descripcion": "Menú Ayuda con las opciones del proyecto WinForms original.",
+      "sha256": "e709ca55fe15279c91e0cb9708df2b8724fa9fb000a6c58bb96e2f9d35c7f50b"
+    },
+    {
+      "archivo": "07_ia_bloquea.png",
+      "descripcion": "Minimax bloquea la amenaza de victoria de X en la primera columna.",
+      "sha256": "cb86d6d94bc8fc6bc4d4d513588c1368e368eca587b37d4c57d333ff1bb196f8"
+    },
+    {
+      "archivo": "08_victoria_ia.png",
+      "descripcion": "Aviso original de victoria de la IA.",
+      "sha256": "2555116ac1cf83037a93ecda64f287747246163222978f06daa3b2c10177dfc3"
+    },
+    {
+      "archivo": "09_partida_finalizada.png",
+      "descripcion": "Diagonal ganadora de O y tablero bloqueado al finalizar.",
+      "sha256": "4ff33129dbc4e3720e40c3fb8f0fc879c1437c5a3d8daee7aa28af635897143a"
+    },
+    {
+      "archivo": "10_reinicio.png",
+      "descripcion": "Nuevo borra la partida terminada y vuelve a habilitar las nueve casillas.",
+      "sha256": "aa1f1c5b1fc3df27138aee78a400028230eb6f2b34e29659711c3c960da6046a"
+    },
+    {
+      "archivo": "11_empate_aviso.png",
+      "descripcion": "Aviso original de empate después de llenar el tablero sin ganador.",
+      "sha256": "3f038434c39c04b60ccdb22a63d7761f02a147d3d95ab6165f5edfc7685b5371"
+    },
+    {
+      "archivo": "12_empate_tablero.png",
+      "descripcion": "Tablero final de empate entre X y Minimax.",
+      "sha256": "a3a3b774b6646792237d2547068f2f7f8b306351734533485b9bc50ae63e1693"
+    },
+    {
+      "archivo": "13_salida.png",
+      "descripcion": "Pantalla de inicio Android después de cerrar la aplicación con Salir.",
+      "sha256": "f5aa312dd75fe5a814a7b4dd8eb9aa848e0a2f10c6df87ab61532797c7886510"
+    },
+    {
+      "archivo": "14_reapertura.png",
+      "descripcion": "Aplicación reabierta en el emulador con una partida nueva.",
+      "sha256": "e38522ba3b0de4db35e4534091d851d837931ab4ff3fc08bfa3907ea3eacfdad"
+    }
+  ]
+}

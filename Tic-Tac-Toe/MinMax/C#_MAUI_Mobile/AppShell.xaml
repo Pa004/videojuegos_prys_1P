@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TicTacToeMinMax.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TicTacToeMinMax"
+    Title="Tic-Tac-Toe"
+    Shell.BackgroundColor="#2396C8"
+    Shell.ForegroundColor="#FFFFFF"
+    Shell.TitleColor="#FFFFFF">
+
+    <ShellContent
+        Title="Tic-Tac-Toe"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+</Shell>
