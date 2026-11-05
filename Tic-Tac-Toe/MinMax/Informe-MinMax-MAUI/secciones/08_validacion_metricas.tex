@@ -1,0 +1,61 @@
+\chapter{Validación y métricas}
+\section{Evidencia de ejecución existente}
+La carpeta \ruta{evidencias\_emulador/capturas\_20261104\_175826} conserva 14 capturas PNG, un README, un archivo \texttt{resultados.json} con hashes SHA-256 y un script de automatización basado en ADB y UIAutomator. El README registra 25 verificaciones con estado PASS. La revisión del JSON y del README muestra que ese estado debe leerse junto con el detalle de cada caso: en las opciones internas de menú, PASS significa que la selección no alteró la partida, porque el menú carece de manejadores, no que la opción anunciada funcione.
+
+La evidencia incluye el inicio, turno humano e IA, selección de casilla ocupada, menús, bloqueo de una amenaza, victoria de la IA, bloqueo tras finalizar, reinicio, empate, salida y reapertura. El script evita crear una victoria humana artificial: la propia IA bloquea las jugadas ganadoras de \texttt{X}. Por eso el paquete de evidencia no contiene una captura de victoria humana. Este comportamiento es coherente con la finalidad de Minimax, pero no reemplaza una prueba unitaria de todos los estados.
+
+El registro identifica \texttt{02\_turno\_humano\_ia.png} y \texttt{03\_casilla\_ocupada.png} con el mismo hash. La segunda captura documenta el paso de prueba pero su imagen es idéntica a la anterior; debe contarse como una limitación de la evidencia visual. Este informe conserva ambas con sus nombres originales para mantener correspondencia con el JSON.
+
+\begin{table}[H]
+\centering
+\caption{Resumen de escenarios de aceptación documentados}
+\label{tab:tests}
+\begin{tabular}{P{4.0cm}P{2.0cm}P{8.5cm}}
+\toprule
+\thd{Escenario} & \thd{Resultado registrado} & \thd{Lectura}\\
+\midrule
+Inicio, jugada de \texttt{X} y respuesta de \texttt{O} & PASS & Evidencia visible de la respuesta Minimax.\\
+Casilla ocupada & PASS & El tablero no cambia; la imagen asociada duplica el paso previo.\\
+Bloqueo de amenaza inmediata & PASS & \texttt{O} completa el bloqueo de la columna amenazada.\\
+Victoria de la IA y fin de partida & PASS & Se presenta el aviso y no se admite una nueva jugada.\\
+Empate & PASS & Se completa el tablero sin línea ganadora y aparece el aviso.\\
+Nuevo, Salir y reapertura & PASS & Los botones reinician y cierran; la reapertura empieza vacía.\\
+Opciones internas de los menús & PASS en el registro & La selección se conserva sin ejecutar una acción; RF-08 sigue pendiente.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Métricas estáticas}
+El conteo se realizó sobre los archivos fuente actuales, sin incluir \texttt{bin}, \texttt{obj} ni las evidencias. “Líneas físicas” incluye líneas vacías y comentarios; se informa así para que la métrica no parezca una medida de complejidad o productividad.
+
+\begin{table}[H]
+\centering
+\caption{Métricas observables del proyecto}
+\label{tab:metrics}
+\begin{tabular}{P{5.0cm}P{2.6cm}P{7.0cm}}
+\toprule
+\thd{Métrica} & \thd{Valor} & \thd{Interpretación}\\
+\midrule
+Archivos C\# de la aplicación & 7 & Incluye página, arranque y archivos Android.\\
+Líneas físicas C\# & 359 & Recuento de líneas, incluidas vacías y comentarios.\\
+Líneas físicas en\newline \texttt{MainPage.xaml.cs} & 182 & Coordinación de turnos e interfaz.\\
+Líneas físicas en\newline \texttt{UnbeatableAI}\allowbreak\texttt{Controller.cs} & 121 & Búsqueda Minimax y evaluación terminal.\\
+Líneas físicas en \texttt{MainPage.xaml} & 64 & Estructura visual de la página.\\
+Destino de compilación declarado & 1 & \texttt{net10.0-android}.\\
+Capturas de ejecución existentes & 14 & PNG conservados en el paquete de evidencias.\\
+Verificaciones listadas en el JSON & 25 & Todas aparecen como PASS; seis selecciones de menú confirman que no hay acción asociada.\\
+Líneas de prueba automatizada & No sumadas & El script existente se considera evidencia, no código de producción.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Observaciones sobre la calidad de la evidencia}
+\begin{itemize}
+  \item La automatización existente consulta nodos de UI por texto e identificador, lo cual permite comprobar casillas y acciones visibles sin inspeccionar solo píxeles.
+  \item El script guarda hashes para detectar cambios en las capturas. El hash idéntico de las capturas 02 y 03 muestra que ese control también ayuda a encontrar evidencia repetida.
+  \item El script contiene una ruta absoluta de ADB bajo el perfil \texttt{C:\textbackslash Users\textbackslash usuario01}. Esa ruta no coincide con el perfil de usuario del entorno actual y reduce la portabilidad; conviene leer el SDK desde una variable de entorno o una configuración local.
+  \item La evidencia existente proviene de \texttt{emulator-5554}. La captura actual de Visual Studio muestra un emulador Pixel 7 con API 36 seleccionado, pero no prueba que se haya vuelto a ejecutar la matriz de escenarios bajo esa selección.
+  \item En esta elaboración no se volvió a ejecutar el script, no se realizó una compilación de la aplicación y no se midió el tiempo de respuesta. La sección reporta los artefactos que ya existían y la inspección estática del código.
+\end{itemize}
+
+% ----------------------------------------------------------------------

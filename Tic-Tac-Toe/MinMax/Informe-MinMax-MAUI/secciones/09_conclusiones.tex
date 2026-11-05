@@ -1,0 +1,30 @@
+\chapter{Análisis, limitaciones y conclusiones}
+\section{Análisis}
+La separación entre página y controlador hace que la decisión de la IA no dependa de botones ni de XAML. La página controla las reglas de interacción y la clase del algoritmo recibe solo la matriz del tablero. Para el dominio pequeño de tres en raya, una búsqueda completa sin poda es suficientemente directa y fácil de inspeccionar.
+
+La evidencia seleccionada cubre varios resultados relevantes, pero no certifica la corrección de todos los estados posibles. La verificación del comportamiento óptimo se fortalece con pruebas unitarias del controlador que recorran estados construidos y validen la jugada esperada. También conviene comparar el resultado de Minimax con un enumerador independiente de todos los tableros legales.
+
+\section{Limitaciones detectadas}
+\begin{enumerate}
+  \item Las opciones de los menús muestran nombres pero no conectan la selección con acciones; puntajes y ayuda no existen como funciones terminadas.
+  \item Los avisos de victoria y empate usan inglés mientras el resto de la pantalla está en español.
+  \item No se guarda historial de partidas ni puntuación.
+  \item El proyecto está configurado únicamente para Android en su \texttt{TargetFramework}; no debe describirse como una entrega ya ejecutable en todas las plataformas MAUI.
+  \item Los permisos de red del manifiesto no se justifican en el flujo de juego revisado.
+  \item El script de evidencias usa una ruta local fija de ADB, y al menos dos imágenes son idénticas según sus hashes.
+  \item No se encontraron registros que permitan afirmar qué estudiante implementó cada parte, cuántas iteraciones hubo o que se practicó programación en pareja.
+\end{enumerate}
+
+\section{Conclusiones}
+\begin{enumerate}
+  \item El proyecto implementa una versión funcional de Tic-Tac-Toe para Android con tablero de tres por tres, turnos de \texttt{X} y \texttt{O}, validación de casillas, detección de victoria y empate, reinicio y salida.
+  \item El controlador aplica Minimax de forma recursiva: maximiza las puntuaciones de \texttt{O}, minimiza las respuestas de \texttt{X}, valora la rapidez de victoria y la demora de derrota, y devuelve un movimiento determinista ante empates de puntuación.
+  \item La configuración observada en Visual Studio es consistente con el destino del proyecto: .NET 10, MAUI para Android, API mínima 21 y un emulador Pixel 7 API 36 seleccionado para depuración.
+  \item Las 14 capturas y 25 registros existentes apoyan la validación de escenarios concretos. Los detalles del registro revelan que las opciones internas de los menús no ejecutan acciones; ese requisito debe permanecer marcado como pendiente.
+  \item El siguiente incremento recomendado es completar las acciones de menú y añadir pruebas unitarias del algoritmo. Luego conviene revisar permisos, idioma, portabilidad del script y mediciones de rendimiento.
+\end{enumerate}
+
+\section{Recomendación de entrega}
+Antes de entregar el informe, completar en la carátula los nombres de estudiantes y el número de grupo de trabajo. La guía deja esos campos como datos del grupo y el directorio no contiene nombres que permitan completarlos con certeza.
+
+% ----------------------------------------------------------------------

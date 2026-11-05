@@ -1,0 +1,46 @@
+\chapter{Introducción y alcance}
+\section{Contexto}
+La guía de la asignatura propone implementar Tic-Tac-Toe con una inteligencia artificial MinMax y C\# MAUI para móvil, dentro del Proyecto 8, alternativa 5. También solicita carátula, requisitos, diagramas, aplicación de SRUM+XP y métricas de software \cite{guia}. Este trabajo documenta la aplicación ubicada en \ruta{Tic-Tac-Toe/MinMax/C\#\_MAUI\_Mobile}.
+
+El sistema presenta un tablero de 3$\times$3. La persona juega primero y utiliza \texttt{X}; el programa utiliza \texttt{O}. La interfaz se construye con XAML y controles de .NET MAUI. La página maneja el estado del tablero; un controlador independiente calcula la respuesta de la computadora.
+
+Hay una diferencia entre dos materiales de referencia del directorio. La guía DOCX define el formato académico y los entregables. El DOCX denominado \emph{minmax-ia-explicacion} explica una versión Windows Forms, con una clase \texttt{frmTicTacToe}; esa clase no pertenece al proyecto MAUI revisado. Por ello, la explicación de la interfaz de este informe se basa en \texttt{MainPage} y el algoritmo se describe según el controlador Minimax que sí está en el proyecto.
+
+\section{Objetivos}
+\subsection{Objetivo general}
+Describir el diseño, la implementación y la evidencia disponible de un juego móvil de tres en raya en .NET MAUI cuya computadora selecciona movimientos mediante Minimax.
+
+\subsection{Objetivos específicos}
+\begin{enumerate}
+  \item Identificar el alcance funcional y las restricciones observables en el código.
+  \item Explicar cómo se representa el tablero y cómo se elige una jugada óptima.
+  \item Documentar la configuración Android y los pasos para abrir y ejecutar el proyecto desde Visual Studio.
+  \item Relacionar las capacidades implementadas con los resultados y límites de la evidencia existente.
+  \item Registrar métricas estáticas y proponer trabajo pendiente sin atribuir al proyecto funciones que no implementa.
+\end{enumerate}
+
+\section{Alcance del producto}
+El alcance implementado es una aplicación Android de una sola pantalla, con tablero, turnos, avisos de fin de partida, botón Nuevo y botón Salir. La plataforma objetivo declarada es \texttt{net10.0-android}; que el proyecto use el modelo de proyecto único de MAUI no significa que el archivo de proyecto actual esté configurado para publicar en iOS, Mac Catalyst o Windows. .NET MAUI permite un proyecto compartido para varias plataformas, pero cada una debe estar incluida como destino de compilación \cite{mauiSingle}.
+
+Quedan fuera del comportamiento implementado el almacenamiento de puntuaciones, la selección de dificultad, la persistencia de partidas, el contenido de ayuda y la ejecución de las opciones internas de los menús. Las etiquetas de esas opciones sí aparecen, pero el código no procesa la selección que devuelve cada hoja de acciones.
+
+\section{Términos y abreviaturas}
+\begin{table}[H]
+\centering
+\small
+\caption{Términos y abreviaturas}\label{tab:terms}
+\begin{tabular}{P{3.0cm}P{11.5cm}}
+\toprule
+\thd{Término} & \thd{Definición usada en este informe}\\
+\midrule
+Estado & Distribución de \texttt{X}, \texttt{O} y casillas vacías en la matriz de 3$\times$3.\\
+Nodo & Estado del tablero considerado durante la búsqueda del árbol de jugadas.\\
+Jugador MAX & La IA, representada por \texttt{O}, que maximiza la puntuación.\\
+Jugador MIN & La persona, representada por \texttt{X}, que minimiza la puntuación de la IA.\\
+MAUI & Interfaz de usuario multiplataforma de .NET; el proyecto revisado compila para Android.\\
+SRUM+XP & Adaptación solicitada por la guía académica para organizar diseño, desarrollo y pruebas.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ----------------------------------------------------------------------

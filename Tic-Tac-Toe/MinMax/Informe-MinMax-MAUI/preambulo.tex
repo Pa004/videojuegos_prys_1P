@@ -1,0 +1,204 @@
+% Informe de laboratorio de Desarrollo de Videojuegos
+% El punto de entrada organizado del informe es main.tex.
+
+% Compilar con LuaLaTeX: fuentes TrueType reales de Windows.
+\usepackage{fontspec}
+\setmainfont{times.ttf}[Path=C:/Windows/Fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf,BoldItalicFont=timesbi.ttf]
+\setsansfont{times.ttf}[Path=C:/Windows/Fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf,BoldItalicFont=timesbi.ttf]
+\setmonofont{Consolas}[Scale=MatchLowercase]
+% Compatibilidad de los enlaces internos con LuaTeX.
+\protected\def\pdfinfo{\pdfextension info}
+\protected\def\pdfdest{\pdfextension dest}
+\protected\def\pdfstartlink{\pdfextension startlink}
+\protected\def\pdfendlink{\pdfextension endlink}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+
+\definecolor{ESPEBlue}{HTML}{18345C}
+\definecolor{ESPEGreen}{HTML}{08733F}
+\definecolor{ESPEGreenDark}{HTML}{164D35}
+\definecolor{PaleGreen}{HTML}{EAF3ED}
+\definecolor{AppBlue}{HTML}{345DEE}
+\definecolor{PaleBlue}{HTML}{EAF0FF}
+\definecolor{SoftGray}{HTML}{F3F5F3}
+\definecolor{Ink}{HTML}{243247}
+\definecolor{OrangeAI}{HTML}{BC571F}
+
+\setlength{\topmargin}{-0.3in}
+\setlength{\oddsidemargin}{-0.1in}
+\setlength{\textwidth}{6.3in}
+\setlength{\textheight}{9.0in}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{0.2in}
+\setlength{\footskip}{0.35in}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{1.1em}
+\setlength{\emergencystretch}{3em}
+\setlength{\tabcolsep}{4.5pt}
+\renewcommand{\arraystretch}{1.25}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.78}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.62}
+\setlength{\textfloatsep}{14pt plus 4pt minus 4pt}
+\setlength{\floatsep}{14pt plus 4pt minus 4pt}
+\pagestyle{headings}
+\renewcommand{\chaptername}{Capítulo}
+\renewcommand{\contentsname}{Índice general}
+\renewcommand{\listfigurename}{Índice de figuras}
+\renewcommand{\listtablename}{Índice de tablas}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{\textcolor{ESPEGreen}{Tabla}}
+\renewcommand{\appendixname}{Anexo}
+\renewcommand{\bibname}{Referencias}
+% Tablas: Times New Roman, encabezado en banda verde y reglas sencillas.
+\let\originaltabular\tabular
+\let\endoriginaltabular\endtabular
+\renewenvironment{tabular}[1]{\small\sffamily\color{Ink}\originaltabular{#1}}{\endoriginaltabular}
+\newcommand{\thd}[1]{%
+  \begingroup
+  \setlength{\fboxsep}{3pt}%
+  \colorbox{ESPEGreen}{%
+    \parbox[t]{\dimexpr\linewidth-2\fboxsep\relax}{%
+      \raggedright\sffamily\small\bfseries\color{white}%
+      \rule{0pt}{2.6ex}#1\par}%
+  }%
+  \endgroup
+}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\toprule}{\noalign{\vskip 2pt\color{ESPEGreen}\hrule height 1.1pt\vskip 2pt}}
+\newcommand{\midrule}{\noalign{\vskip 1pt\color{ESPEGreen!40}\hrule height 0.45pt\vskip 1pt}}
+\newcommand{\bottomrule}{\noalign{\vskip 2pt\color{ESPEGreen}\hrule height 1.1pt}}
+
+\newcommand{\url}[1]{\texttt{\detokenize{#1}}}
+\pdfinfo{/Title (Tic-Tac-Toe en .NET MAUI - Minimax) /Subject (Informe de laboratorio - Desarrollo de Videojuegos)}
+
+% Enlaces internos del índice con primitivas pdfTeX, sin paquetes externos.
+\newcounter{toclinkid}
+\makeatletter
+\renewcommand{\addcontentsline}[3]{%
+  \stepcounter{toclinkid}%
+  \edef\@currdest{toclink\arabic{toclinkid}}%
+  \pdfdest name{\@currdest} xyz%
+  \addtocontents{#1}{\protect\contentsline{#2}{#3}{\thepage}{\@currdest}}%
+}
+\renewcommand{\contentsline}[4]{%
+  \csname l@#1\endcsname%
+    {\pdfstartlink attr{/Border [0 0 0]} goto name{#4}%
+     \textcolor{ESPEGreen}{#2}\pdfendlink}%
+    {\pdfstartlink attr{/Border [0 0 0]} goto name{#4}%
+     \textcolor{ESPEGreen}{#3}\pdfendlink}%
+}
+\makeatother
+
+\setlength{\abovecaptionskip}{5pt}
+\setlength{\belowcaptionskip}{3pt}
+\makeatletter
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  {\small\sffamily\centering
+   \textcolor{ESPEGreen}{\bfseries #1}\hspace{0.5em}%
+   \textcolor{Ink}{#2}\par}%
+  \vskip\belowcaptionskip
+}
+\setlength{\@fptop}{0pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{22pt}%
+  {\parindent\z@\raggedright\normalfont
+    {\color{ESPEGreen}\sffamily\Large\bfseries\@chapapp\space\thechapter\par}%
+    \vskip 8pt%
+    {\color{Ink}\sffamily\bfseries\Huge #1\par}%
+    \nobreak\vskip 22pt%
+  }}
+\def\@makeschapterhead#1{%
+  \vspace*{22pt}%
+  {\parindent\z@\raggedright\normalfont
+    {\color{ESPEGreen}\sffamily\bfseries\Huge #1\par}%
+    \nobreak\vskip 22pt%
+  }}
+\renewcommand{\chaptermark}[1]{\markboth{\sffamily\small\color{ESPEGreenDark}\chaptername\space\thechapter.\quad #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\sffamily\small\color{ESPEGreenDark}\thesection\quad #1}}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+  {-3.4ex\@plus -1ex \@minus -.2ex}%
+  {2ex \@plus .2ex}%
+  {\normalfont\Large\sffamily\bfseries\color{ESPEGreenDark}}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+  {-2.8ex\@plus -.8ex \@minus -.2ex}%
+  {1.4ex \@plus .2ex}%
+  {\normalfont\large\sffamily\bfseries\color{ESPEGreenDark}}}
+\makeatother
+
+% Dracula / cyberpunk: estilos de código centralizados.
+\definecolor{DraculaBG}{HTML}{282A36}
+\definecolor{DraculaPanel}{HTML}{21222C}
+\definecolor{DraculaFG}{HTML}{F8F8F2}
+\definecolor{DraculaPurple}{HTML}{BD93F9}
+\definecolor{DraculaCyan}{HTML}{8BE9FD}
+\definecolor{DraculaPink}{HTML}{FF79C6}
+\definecolor{DraculaGreen}{HTML}{50FA7B}
+\definecolor{DraculaComment}{HTML}{A0ACD7}
+
+\lstdefinestyle{draculacyber}{
+  language=[Sharp]C,
+  basicstyle=\ttfamily\small\color{DraculaFG},
+  keywordstyle=\bfseries\color{DraculaPink},
+  stringstyle=\color{DraculaGreen},
+  commentstyle=\itshape\color{DraculaComment},
+  identifierstyle=\color{DraculaFG},
+  morekeywords={Minimax,MAX,MIN,si,sino,para,retornar,funcion,profundidad},
+  columns=fullflexible,
+  keepspaces=true,
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\ttfamily\scriptsize\color{DraculaComment},
+  numbersep=9pt,
+  stepnumber=1,
+  frame=none,
+  backgroundcolor=\color{DraculaBG},
+  xleftmargin=1.8em,
+  xrightmargin=0.3em,
+  aboveskip=0.5em,
+  belowskip=0.5em,
+  tabsize=4
+}
+\lstset{style=draculacyber}
+
+\tcbset{draculacyberbox/.style={
+  colback=DraculaBG,
+  colframe=DraculaPurple,
+  colbacktitle=DraculaPanel,
+  coltitle=DraculaCyan,
+  boxrule=0.7pt,
+  leftrule=2pt,
+  arc=1.5mm,
+  left=2mm,
+  right=2mm,
+  top=2mm,
+  bottom=2mm,
+  before skip=12pt,
+  after skip=12pt,
+  fonttitle=\bfseries,
+  titlerule=0.5pt
+}}
+\newtcblisting{codigobox}[1]{
+  draculacyberbox,
+  listing only,
+  title={#1},
+  listing options={style=draculacyber}
+}
+\newcommand{\estado}[1]{\textsf{\small #1}}
+\newcommand{\ruta}[1]{\texttt{#1}}

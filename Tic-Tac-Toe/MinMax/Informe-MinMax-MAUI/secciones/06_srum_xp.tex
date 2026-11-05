@@ -1,0 +1,50 @@
+\chapter{Desarrollo con SRUM+XP}
+\section{Adaptación de la metodología}
+La guía del laboratorio solicita SRUM+XP y menciona diseño, desarrollo y pruebas \cite{guia}. El repositorio contiene el código y las evidencias de ejecución, pero no contiene una bitácora de sprints, un tablero histórico, acuerdos de programación en pareja ni registros de integración continua. Por esta razón, la tabla siguiente organiza el trabajo por incrementos comprobables y no atribuye fechas, roles o ceremonias que no están documentados.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Incrementos reconstruidos a partir del proyecto}\label{tab:increments}
+\begin{tabular}{P{2.0cm}P{3.2cm}P{5.8cm}P{2.8cm}}
+\toprule
+\thd{Fase} & \thd{Objetivo} & \thd{Resultado en el código} & \thd{Artefacto}\\
+\midrule
+Diseño & Separar interfaz, estado y decisión de IA. & Página XAML para presentación; controlador separado para búsqueda. & Diagramas de este informe.\\
+Tablero & Construir tablero y turnos. & Matriz 3$\times$3, nueve botones, validación de casilla y reinicio. & \texttt{MainPage.}\allowbreak\texttt{xaml.cs}.\\
+Minimax & Integrar decisión adversarial. & Simulación de jugadas y búsqueda Minimax recursiva. & \texttt{UnbeatableAI}\allowbreak\texttt{Controller.cs}.\\
+Pruebas & Revisar escenarios en Android. & Automatización por ADB/UIAutomator, capturas PNG y registro JSON. & 14 imágenes, 25 registros.\\
+Informe & Entregar requisitos, análisis y resultados. & Especificación, diagramas, configuración y métricas. & Este informe.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Prácticas XP observables}
+\begin{table}[H]
+\centering
+\small
+\caption{Relación entre prácticas ágiles y evidencia encontrada}\label{tab:xp}
+\begin{tabular}{P{3.1cm}P{6.2cm}P{4.5cm}}
+\toprule
+\thd{Práctica} & \thd{Observación} & \thd{Estado}\\
+\midrule
+Diseño simple & La búsqueda está aislada en una clase y usa una matriz pequeña, sin dependencias de interfaz. & Evidenciado en el código.\\
+Pruebas automatizadas & El script existente consulta la jerarquía UI, toca controles, comprueba el tablero y guarda hashes de imágenes. & Evidencia presente; no se ejecutó durante la elaboración del informe.\\
+Retroalimentación frecuente & Los resultados incluyen capturas de cada escenario y un JSON legible por máquina. & Evidencia presente.\\
+Programación en pareja & No se encontró registro de sesiones o roles de pareja. & No verificable.\\
+Integración continua & No se encontró pipeline ni configuración de compilación automatizada. & No verificado.\\
+Refactorización continua & El historial de cambios no está disponible en el directorio de trabajo. & No verificable.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Backlog de mejoras priorizado}
+\begin{enumerate}
+  \item \textbf{Prioridad alta:} conectar el resultado de cada menú con su acción. Nuevo y Salir pueden reutilizar los manejadores existentes; Puntajes requiere definir y almacenar un modelo de puntuación; Ayuda requiere contenido.
+  \item \textbf{Prioridad alta:} añadir pruebas unitarias del controlador Minimax para victoria inmediata, bloqueo obligatorio, empate, tablero lleno y ausencia de movimiento.
+  \item \textbf{Prioridad media:} unificar el idioma de los avisos y los textos; agregar una presentación accesible del turno y del estado terminal.
+  \item \textbf{Prioridad media:} medir el tiempo de decisión en un dispositivo y conservar la medición como evidencia de rendimiento.
+  \item \textbf{Prioridad baja:} evaluar poda alfa-beta o memorización si el tablero se generaliza a juegos con mayor espacio de búsqueda.
+\end{enumerate}
+
+% ----------------------------------------------------------------------

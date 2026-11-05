@@ -1,0 +1,42 @@
+# Visual Studio / IDE metadata
+.vs/
+.idea/
+*.user
+*.suo
+*.rsuser
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+
+# .NET build outputs
+[Bb]in/
+[Oo]bj/
+[Tt]est[Rr]esults/
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local credentials and environment files
+.env
+.env.*
+!.env.example
+
+# LaTeX build intermediates; keep the final report PDF
+*.aux
+*.toc
+*.lof
+*.lot
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.listing
+*.xdv
+*.dvi
+/Tic-Tac-Toe/MinMax/Informe-MinMax-MAUI/*.log
+
+# Temporary PDF renders and inspection output
+/Tic-Tac-Toe/MinMax/Informe-MinMax-MAUI/qa-*

@@ -1,0 +1,13 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#EAF3ED","primaryTextColor":"#163D2C","primaryBorderColor":"#197047","lineColor":"#64776A","secondaryColor":"#F7F2E7","tertiaryColor":"#F2F5F3","background":"#FFFFFF"},"flowchart":{"curve":"basis","htmlLabels":true,"nodeSpacing":46,"rankSpacing":64}}}%%
+flowchart LR
+  START["Arranque MAUI<br/>MauiProgram · App · AppShell"] --> PAGE["MainPage<br/>XAML · tablero · turnos"]
+  PAGE <-->|"lee y actualiza"| BOARD[("board<br/>char[3,3]")]
+  PAGE -->|"GetBestMove(board)"| AI["UnbeatableAIController<br/>búsqueda Minimax"]
+  AI -.->|"índice óptimo"| PAGE
+
+  classDef startup fill:#F3F5F3,stroke:#84958A,color:#26372D,stroke-width:1.2px;
+  classDef ui fill:#E7F2EA,stroke:#197047,color:#143D2A,stroke-width:1.6px;
+  classDef data fill:#F9F4E9,stroke:#B18A44,color:#46391F,stroke-width:1.4px;
+  class START startup;
+  class PAGE,AI ui;
+  class BOARD data;

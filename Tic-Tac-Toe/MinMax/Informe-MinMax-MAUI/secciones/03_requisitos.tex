@@ -1,0 +1,60 @@
+\chapter{Especificación de requisitos}
+\section{Convenciones y base de la especificación}
+La guía del curso solicita requisitos según IEEE 830 \cite{guia}. IEEE SA registra IEEE 830-1998 como sustituido por ISO/IEC/IEEE 29148:2011. La edición 2018 de 29148 figura como estándar activo \cite{stand830,stand29148}. Este informe conserva el formato de especificación de la asignatura y no afirma una certificación de conformidad.
+
+Los estados de cumplimiento se interpretan así: \estado{Implementado} indica que el código contiene el comportamiento; \estado{Parcial} indica que se cumple una parte; \estado{Pendiente} indica que el comportamiento solicitado no se encontró en el código revisado. Una captura de pantalla prueba un escenario visible, no todas las entradas posibles.
+
+\section{Requisitos funcionales}
+\begin{table}[H]
+\centering
+\small
+\caption{Requisitos funcionales y evidencia asociada}\label{tab:rf}
+\begin{tabular}{P{1.0cm}P{7.5cm}P{2.7cm}P{3.0cm}}
+\toprule
+\thd{ID} & \thd{Requisito} & \thd{Estado} & \thd{Evidencia}\\
+\midrule
+RF-01 & Al iniciar, mostrar nueve casillas vacías y permitir que la persona empiece con \texttt{X}. & Implementado & \texttt{ResetBoard}; captura 01.\\
+RF-02 & Registrar una jugada humana solo si la casilla está vacía y es el turno humano. & Implementado & \texttt{OnCellClicked}; captura 03.\\
+RF-03 & Después de una jugada humana válida, calcular y registrar una respuesta de la IA con \texttt{O}. & Implementado & \texttt{AIMove\allowbreak Async}, \texttt{GetBest\allowbreak Move}; captura 02.\\
+RF-04 & Detectar victoria de \texttt{X}, victoria de \texttt{O} o empate; mostrar aviso y bloquear jugadas posteriores. & Implementado & \texttt{CheckGameEnd\allowbreak Async}; capturas 08, 09 y 11.\\
+RF-05 & Reiniciar la matriz, habilitar las nueve casillas y devolver el turno a la persona. & Implementado & \texttt{OnNewClicked}; captura 10.\\
+RF-06 & Cerrar la aplicación desde el control Salir. & Implementado & \texttt{OnExitClicked}; capturas 13 y 14.\\
+RF-07 & Mostrar las opciones visibles Archivo, Ver y Ayuda. & Implementado & \texttt{MainPage.xaml}; capturas 04, 05 y 06.\\
+RF-08 & Ejecutar la acción elegida en cada menú: Nuevo, Salir, Puntajes, Resetear puntajes, Acerca de y Contenido. & Pendiente & Los manejadores solo muestran la hoja de acciones y descartan su selección.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Requisitos no funcionales}
+\begin{table}[H]
+\centering
+\small
+\caption{Requisitos no funcionales y observaciones}\label{tab:rnf}
+\begin{tabular}{P{1.0cm}P{7.5cm}P{2.7cm}P{3.0cm}}
+\toprule
+\thd{ID} & \thd{Requisito} & \thd{Estado} & \thd{Nota / límite}\\
+\midrule
+RNF-01 & La aplicación debe orientarse a Android y declarar una versión mínima de plataforma. & Declarado & \texttt{net10.0-android}; mínimo Android 5.0/API 21 en el proyecto.\\
+RNF-02 & El tablero debe conservar proporción cuadrada y adaptarse al ancho disponible. & Implementado & \texttt{OnSizeAllocated}; ancho máximo de 340 unidades MAUI.\\
+RNF-03 & Los controles deben ser identificables por automatización y contar con descripción semántica. & Parcialmente implementado & Cada casilla recibe \texttt{AutomationId} y descripción; no hay evidencia de evaluación formal con lector de pantalla.\\
+RNF-04 & La jugada de la IA debe responder con rapidez suficiente para un tablero 3$\times$3. & No medido & La búsqueda se ejecuta sincrónicamente y no se guardan tiempos de respuesta.\\
+RNF-05 & La lógica del algoritmo debe poder leerse separada de la interfaz. & Implementado & El controlador Minimax es una clase aparte de \texttt{MainPage}.\\
+RNF-06 & No se debe aceptar una jugada en una casilla ocupada ni continuar una partida terminada. & Implementado & Validaciones en \texttt{OnCellClicked}; evidencia de ocupación y fin de partida.\\
+RNF-07 & La aplicación debe minimizar permisos que no necesita. & Revisar & El manifiesto declara Internet y estado de red; no se encontraron llamadas de red en la lógica revisada.\\
+RNF-08 & La interfaz debe usar un idioma uniforme. & Parcial & La interfaz está en español, pero los avisos de victoria y empate están en inglés.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Criterios de aceptación}
+\begin{enumerate}
+  \item Una partida nueva muestra un tablero vacío y empieza el turno humano.
+  \item Una casilla ocupada conserva su símbolo cuando se vuelve a pulsar.
+  \item Una jugada válida de \texttt{X} va seguida por una respuesta legal de \texttt{O}.
+  \item La IA bloquea una amenaza inmediata y, cuando existe una victoria forzada, puede completarla.
+  \item El sistema reconoce una partida empatada y bloquea el tablero tras terminar.
+  \item Nuevo limpia el estado y Salir cierra el proceso de la aplicación.
+  \item Las opciones de menú deben ejecutar sus acciones antes de considerar completo el requisito RF-08.
+\end{enumerate}
+
+% ----------------------------------------------------------------------

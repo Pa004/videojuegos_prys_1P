@@ -1,0 +1,66 @@
+\chapter{Algoritmo Minimax}
+\section{Idea de decisión}
+Minimax es una búsqueda adversarial de suma cero: la IA elige el movimiento que maximiza su resultado y supone que la persona responderá con el movimiento que más lo reduce. El material didáctico de Stanford presenta el mismo principio de búsqueda recursiva sobre árboles de juego \cite{stanfordMinimax}. Para el tablero de tres en raya se exploran jugadas legales hasta alcanzar una victoria, una derrota o un empate.
+
+La puntuación terminal del controlador es:
+\[
+U(s,d)=
+\begin{array}{ll}
+10-d, & \mbox{si gana la IA;}\\
+-10+d, & \mbox{si gana la persona;}\\
+0, & \mbox{si el tablero termina en empate.}
+\end{array}
+\]
+El término $d$ favorece victorias rápidas y retrasa derrotas. En estados no terminales, la rutina no asigna una heurística intermedia: sigue expandiendo los movimientos hasta un resultado terminal.
+
+\section{Procedimiento implementado}
+\begin{codigobox}{Pseudocódigo de Minimax}
+GetBestMove(board):
+    mejorPuntaje = -infinito
+    mejorIndice = -1
+    para cada indice i entre 0 y 8:
+        si board[i] esta vacia:
+            colocar O
+            puntaje = Minimax(board, profundidad=0, maximiza=false)
+            restaurar casilla vacia
+            si puntaje > mejorPuntaje:
+                guardar puntaje e indice
+    devolver mejorIndice
+
+Minimax(board, profundidad, maximiza):
+    puntaje = evaluar ganador
+    si gana O: devolver 10 - profundidad
+    si gana X: devolver -10 + profundidad
+    si no quedan movimientos: devolver 0
+    si maximiza:
+        probar cada casilla vacia como O
+        devolver el maximo de las llamadas recursivas
+    si no:
+        probar cada casilla vacia como X
+        devolver el minimo de las llamadas recursivas
+\end{codigobox}
+
+\begin{codigobox}{Fragmento C\# del controlador Minimax}
+private int Minimax(char[,] board, int depth, bool isMaximizing)
+{
+    int score = EvaluateBoard(board);
+    if (score == 10) return score - depth;
+    if (score == -10) return score + depth;
+    if (!IsMovesLeft(board)) return 0;
+    // Las ramas restantes prueban cada casilla vacia con MAX o MIN.
+}
+\end{codigobox}
+
+En \texttt{GetBestMove}, cada posible movimiento de \texttt{O} se simula temporalmente en la misma matriz recibida. Después de cada llamada recursiva se restaura el espacio vacío, para que las siguientes alternativas empiecen desde el mismo estado. Como la primera llamada recursiva usa \texttt{isMaximizing=false}, la IA supone que después de su movimiento la persona elegirá la respuesta más perjudicial para ella.
+
+\section{Condiciones terminales y desempate}
+\texttt{EvaluateBoard} examina las tres filas, tres columnas y dos diagonales. Devuelve $10$ cuando encuentra una línea de \texttt{O}, $-10$ para una línea de \texttt{X} y $0$ en caso contrario. \texttt{Minimax} distingue entre ese cero no terminal y un empate real mediante \texttt{IsMovesLeft}: solo cuando no quedan casillas devuelve el valor terminal cero.
+
+Si dos movimientos reciben la misma puntuación, el controlador conserva el primero que encuentra porque actualiza la mejor jugada solo cuando \texttt{score > bestScore}. El orden es el índice lineal de 0 a 8. Esto produce desempates deterministas, aunque no prioriza explícitamente centro o esquinas.
+
+\section{Costo de búsqueda}
+Sea $b$ el máximo número de movimientos disponibles en un estado y $d$ la profundidad restante. La búsqueda completa tiene costo temporal del orden de $O(b^d)$; aquí $b\leq9$ y $d\leq9$. La recursión es de profundidad acotada y modifica una única matriz de 3$\times$3, por lo que el espacio auxiliar crece con la profundidad, $O(d)$, además del tablero de tamaño fijo. El código no aplica poda alfa-beta ni memorización. Para tres en raya el espacio de búsqueda es pequeño; esta elección mantiene simple la explicación del algoritmo.
+
+La propiedad de no perder se deriva del cálculo óptimo en estados legales y de que ambos resultados terminales se evalúan correctamente. Las capturas existentes demuestran escenarios seleccionados —por ejemplo, bloquear una columna y completar una diagonal—; no sustituyen una enumeración exhaustiva de todos los estados posibles.
+
+% ----------------------------------------------------------------------

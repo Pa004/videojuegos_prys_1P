@@ -1,0 +1,28 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#EAF3ED","primaryTextColor":"#163D2C","primaryBorderColor":"#197047","lineColor":"#64776A","secondaryColor":"#F7F2E7","tertiaryColor":"#F2F5F3","background":"#FFFFFF"},"flowchart":{"curve":"basis","htmlLabels":true,"nodeSpacing":46,"rankSpacing":68}}}%%
+flowchart LR
+  J["Jugador humano"]
+  subgraph SISTEMA["Tic-Tac-Toe MinMax MAUI"]
+    direction TB
+    U1(["Iniciar partida"])
+    U2(["Realizar jugada"])
+    U3(["Calcular respuesta<br/>con Minimax"])
+    U4(["Consultar resultado"])
+    U5(["Reiniciar partida"])
+    U6(["Abrir menús<br/>opciones sin acción"])
+    U7(["Salir de la aplicación"])
+    U2 -. incluye .-> U3
+    U2 -. incluye .-> U4
+  end
+  J --- U1
+  J --- U2
+  J --- U4
+  J --- U5
+  J --- U6
+  J --- U7
+
+  classDef actor fill:#F7F2E7,stroke:#B18A44,color:#46391F,stroke-width:1.6px;
+  classDef action fill:#EAF3ED,stroke:#197047,color:#163D2C,stroke-width:1.4px;
+  classDef pending fill:#FFF7E8,stroke:#C08A33,color:#5B451C,stroke-width:1.4px;
+  class J actor;
+  class U1,U2,U3,U4,U5,U7 action;
+  class U6 pending;

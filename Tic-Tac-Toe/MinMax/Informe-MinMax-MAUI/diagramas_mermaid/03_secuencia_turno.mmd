@@ -1,0 +1,23 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#EAF3ED","primaryTextColor":"#163D2C","primaryBorderColor":"#197047","lineColor":"#64776A","secondaryColor":"#F7F2E7","tertiaryColor":"#F2F5F3","background":"#FFFFFF","actorBkg":"#F7F2E7","actorBorder":"#B18A44","actorTextColor":"#46391F","signalColor":"#466152","signalTextColor":"#26372D","activationBkgColor":"#E7F2EA","activationBorderColor":"#197047"},"sequence":{"showSequenceNumbers":true,"messageAlign":"center","mirrorActors":false}}}%%
+sequenceDiagram
+  autonumber
+  actor J as Jugador
+  participant P as MainPage
+  participant C as UnbeatableAIController
+
+  J->>P: Toca una casilla vacía
+  activate P
+  P->>P: Registra X y comprueba el estado
+  opt La partida continúa
+    P->>C: GetBestMove(board)
+    activate C
+    loop Por cada casilla vacía
+      C->>C: Minimax(board, profundidad, maximiza)
+      Note right of C: Explora respuestas de X y O<br/>hasta un estado terminal
+    end
+    C-->>P: Índice de la mejor jugada
+    deactivate C
+    P->>P: Registra O y comprueba el resultado
+  end
+  P-->>J: Actualiza el tablero o muestra el aviso
+  deactivate P

@@ -1,0 +1,18 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#EAF3ED","primaryTextColor":"#163D2C","primaryBorderColor":"#197047","lineColor":"#64776A","secondaryColor":"#F7F2E7","tertiaryColor":"#F2F5F3","background":"#FFFFFF","classText":"#163D2C","classBorder":"#197047","classTitleColor":"#163D2C"},"class":{"hideEmptyMembersBox":true,"defaultFontSize":18}}}%%
+classDiagram
+  direction LR
+  class MainPage {
+    -board char[3,3]
+    -buttons Button[9]
+    -aiController UnbeatableAIController
+    +OnCellClicked()
+    -ResetBoard()
+    -CheckGameEndAsync() Task~bool~
+  }
+  class UnbeatableAIController {
+    +GetBestMove(board) int
+    -Minimax(board, depth, isMaximizing) int
+    -EvaluateBoard(board) int
+    -IsMovesLeft(board) bool
+  }
+  MainPage --> UnbeatableAIController : solicita una jugada
